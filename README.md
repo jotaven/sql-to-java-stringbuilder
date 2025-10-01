@@ -21,7 +21,7 @@ git clone https://github.com/jotaven/sql-to-java-stringbuilder.git
 Navegue até o diretório:
 
 ```bash
-cd SEU_REPOSITORIO
+cd sql-to-java-stringbuilder
 ```
 
 Crie e ative um ambiente virtual (recomendado):
