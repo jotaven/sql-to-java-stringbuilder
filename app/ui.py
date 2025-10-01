@@ -15,7 +15,6 @@ class MainApplicationWindow:
         main_frame = tk.Frame(self.root, padx=10, pady=10)
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # --- Linha de Configuração ---
         config_frame = tk.Frame(main_frame)
         config_frame.pack(fill=tk.X, pady=(0, 10))
         
@@ -27,23 +26,19 @@ class MainApplicationWindow:
         self.load_button = tk.Button(config_frame, text="Carregar de .sql...", command=self.load_sql_file)
         self.load_button.pack(side=tk.RIGHT, padx=(10, 0))
         
-        # --- Área de Input SQL ---
         tk.Label(main_frame, text="Insira ou cole seu código SQL aqui:").pack(anchor="w")
         self.sql_input = scrolledtext.ScrolledText(main_frame, height=10, wrap=tk.WORD, undo=True)
         self.sql_input.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = ?;")
 
-        # --- Botão de Conversão ---
         self.convert_button = tk.Button(main_frame, text="Converter para Java", command=self.perform_conversion, font=("Helvetica", 10, "bold"))
         self.convert_button.pack(fill=tk.X, pady=(0, 10))
 
-        # --- Área de Output Java ---
         tk.Label(main_frame, text="Código Java Gerado:").pack(anchor="w")
         self.java_output = scrolledtext.ScrolledText(main_frame, height=10, wrap=tk.WORD)
         self.java_output.pack(fill=tk.BOTH, expand=True)
         self.java_output.config(state='disabled')
         
-        # --- Botão de Copiar e Status ---
         bottom_frame = tk.Frame(main_frame)
         bottom_frame.pack(fill=tk.X, pady=(10, 0))
         
