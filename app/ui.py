@@ -18,7 +18,7 @@ class MainApplicationWindow:
         config_frame = tk.Frame(main_frame)
         config_frame.pack(fill=tk.X, pady=(0, 10))
         
-        tk.Label(config_frame, text="Nome da variável Java:").pack(side=tk.LEFT, padx=(0, 5))
+        tk.Label(config_frame, text="Nome da variável StringBuilder:").pack(side=tk.LEFT, padx=(0, 5))
         self.variable_name_entry = tk.Entry(config_frame, width=30)
         self.variable_name_entry.insert(0, "sql")
         self.variable_name_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
@@ -30,9 +30,21 @@ class MainApplicationWindow:
         self.sql_input = scrolledtext.ScrolledText(main_frame, height=10, wrap=tk.WORD, undo=True)
         self.sql_input.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = ?;")
+        self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = {{id}};")
 
-        self.convert_button = tk.Button(main_frame, text="Converter para Java", command=self.perform_conversion, font=("Helvetica", 10, "bold"))
-        self.convert_button.pack(fill=tk.X, pady=(0, 10))
+        assign_var_frame = tk.Frame(main_frame)
+        assign_var_frame.pack(fill=tk.X, pady=5)
+        
+        tk.Label(assign_var_frame, text="Nome da Variável p/ Seleção:").pack(side=tk.LEFT)
+        self.param_name_entry = tk.Entry(assign_var_frame)
+        self.param_name_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        
+        self.assign_var_button = tk.Button(assign_var_frame, text="Atribuir Variável", command=self._assign_variable_to_selection)
+        self.assign_var_button.pack(side=tk.LEFT)
+
+        self.convert_button = tk.Button(main_frame, text="Converter para Java", command=self.perform_conversion, 
+                                      font=("Helvetica", 12, "bold"), height=2)
+        self.convert_button.pack(fill=tk.X, pady=(5, 10))
 
         tk.Label(main_frame, text="Código Java Gerado:").pack(anchor="w")
         self.java_output = scrolledtext.ScrolledText(main_frame, height=10, wrap=tk.WORD)
@@ -47,6 +59,26 @@ class MainApplicationWindow:
         
         self.status_label = tk.Label(bottom_frame, text="Pronto.", bd=1, relief=tk.SUNKEN, anchor=tk.W)
         self.status_label.pack(side=tk.RIGHT, fill=tk.X, expand=True, padx=(10, 0))
+
+    def _assign_variable_to_selection(self):
+        """Substitui o texto selecionado no input de SQL por um placeholder de variável."""
+        try:
+            start = self.sql_input.index(tk.SEL_FIRST)
+            end = self.sql_input.index(tk.SEL_LAST)
+        except tk.TclError:
+            self.status_label.config(text="Erro: Nenhum texto selecionado.")
+            return
+
+        param_name = self.param_name_entry.get().strip()
+        if not param_name:
+            self.status_label.config(text="Erro: Nome da variável não pode ser vazio.")
+            return
+        
+        placeholder = f"{{{{{param_name}}}}}"
+        
+        self.sql_input.delete(start, end)
+        self.sql_input.insert(start, placeholder)
+        self.status_label.config(text=f"Variável '{param_name}' atribuída.")
 
     def load_sql_file(self):
         filepath = filedialog.askopenfilename(
