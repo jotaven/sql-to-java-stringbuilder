@@ -1,17 +1,13 @@
-# Nome do workflow
 name: Build and Release Executable
 
-# Gatilhos (Triggers)
 on:
-  # 1. Gatilho automático: Quando uma tag 'v*' é criada
   push:
     tags:
       - 'v*'
 
-  # 2. Gatilho manual: Permite iniciar a pipeline pela interface do GitHub
   workflow_dispatch:
 
-# Permissões para criar o release
+# Permissões para criar o release e escrever artefatos
 permissions:
   contents: write
 
@@ -20,11 +16,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # 1. Baixa o código do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Configura o ambiente Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -32,16 +26,19 @@ jobs:
           cache: 'pip'
 
 
-      # 3. Gera o executável
       - name: Build executable with PyInstaller
         run: pyinstaller --onefile --windowed --name="ConversorSQL" main.py
 
-      # 4. Cria o Release e anexa o .exe (Apenas para gatilhos de tag)
-      # Adicionamos uma condição para que este passo só rode quando uma tag for criada,
-      # e não durante os testes manuais.
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           files: dist/ConversorSQL.exe
+
+      - name: Upload Executable as an Artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ConversorSQL-Executable
+          path: dist/ConversorSQL.exe
