@@ -27,7 +27,7 @@ jobs:
 
 
       - name: Build executable with PyInstaller
-        run: pyinstaller --onefile --windowed --name="ConversorSQL" main.py
+        run: python -m PyInstaller --onefile --windowed --name="ConversorSQL" main.py
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
