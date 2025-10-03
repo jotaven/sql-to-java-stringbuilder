@@ -29,7 +29,6 @@ class MainApplicationWindow:
         tk.Label(main_frame, text="Insira ou cole seu código SQL aqui:").pack(anchor="w")
         self.sql_input = scrolledtext.ScrolledText(main_frame, height=10, wrap=tk.WORD, undo=True)
         self.sql_input.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
-        self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = ?;")
         self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = {{id}};")
 
         assign_var_frame = tk.Frame(main_frame)
