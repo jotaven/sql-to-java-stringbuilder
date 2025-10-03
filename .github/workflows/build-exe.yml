@@ -31,18 +31,12 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      # 3. Instala as dependências
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyinstaller
-          if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
-      # 4. Gera o executável
+      # 3. Gera o executável
       - name: Build executable with PyInstaller
         run: pyinstaller --onefile --windowed --name="ConversorSQL" main.py
 
-      # 5. Cria o Release e anexa o .exe (Apenas para gatilhos de tag)
+      # 4. Cria o Release e anexa o .exe (Apenas para gatilhos de tag)
       # Adicionamos uma condição para que este passo só rode quando uma tag for criada,
       # e não durante os testes manuais.
       - name: Create GitHub Release
