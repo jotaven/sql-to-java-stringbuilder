@@ -35,9 +35,9 @@ jobs:
       # 4. Roda o PyInstaller para criar o executável
       - name: Build executable with PyInstaller
         run: |
-          # Altere 'meu_app.py' para o nome do seu script principal
+          # Altere 'main.py' para o nome do seu script principal
           # e --name para o nome do seu executável.
-          pyinstaller --onefile --windowed --name="ConversorSQL" meu_app.py
+          pyinstaller --onefile --windowed --name="ConversorSQL" main.py
 
       # 5. (NOVO) Cria o Release no GitHub e anexa o .exe
       - name: Create GitHub Release
