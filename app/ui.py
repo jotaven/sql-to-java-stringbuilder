@@ -26,7 +26,6 @@ class MainApplicationWindow:
         tk.Label(left_pane, text="Código SQL:", font=("Helvetica", 12, "bold")).pack(anchor="w")
         self.sql_input = scrolledtext.ScrolledText(left_pane, height=10, wrap=tk.WORD, undo=True)
         self.sql_input.pack(fill=tk.BOTH, expand=True, pady=(5, 10))
-        self.sql_input.insert(tk.END, "SELECT\n    nome,\n    preco\nFROM\n    produtos\nWHERE\n    id = {{id}};")
 
         sql_buttons_frame = tk.Frame(left_pane)
         sql_buttons_frame.pack(fill=tk.X)
@@ -64,15 +63,6 @@ class MainApplicationWindow:
         tk.Label(right_pane, text="Java StringBuilder:", font=("Helvetica", 12, "bold")).pack(anchor="w")
         self.java_output = scrolledtext.ScrolledText(right_pane, height=10, wrap=tk.WORD, undo=True)
         self.java_output.pack(fill=tk.BOTH, expand=True, pady=(5, 10))
-        java_example = ('StringBuilder sql = new StringBuilder();\n'
-                        'sql.append("SELECT \\n");\n'
-                        'sql.append("    nome, \\n");\n'
-                        'sql.append("    preco \\n");\n'
-                        'sql.append("FROM \\n");\n'
-                        'sql.append("    produtos \\n");\n'
-                        'sql.append("WHERE \\n");\n'
-                        'sql.append("    id = " + id + "; \\n");')
-        self.java_output.insert(tk.END, java_example)
         
         java_buttons_frame = tk.Frame(right_pane)
         java_buttons_frame.pack(fill=tk.X)
