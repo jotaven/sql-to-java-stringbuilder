@@ -1,7 +1,6 @@
 # Conversor de SQL para Java StringBuilder
 Uma ferramenta de desktop simples e eficaz para converter scripts SQL em código Java StringBuilder, agilizando o trabalho de desenvolvedores.
-<img width="808" height="690" alt="Image" src="https://github.com/user-attachments/assets/2c44e34a-90c2-4326-8a24-9925b5019e50" />
-
+<img width="1483" height="508" alt="Image" src="https://github.com/user-attachments/assets/c71f6548-3177-4eb3-97d3-926c9dad8b56" />
 ## Como Executar o Projeto
 
 Pré-requisitos:
